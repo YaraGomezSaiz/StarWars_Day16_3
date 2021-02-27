@@ -1,59 +1,60 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/home.scss";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import { myFetch } from "../fetchFunction.js";
 
 import Card2 from "../component/card.jsx";
 
 export default function Home() {
-	const [planets, setPlanets] = useState([]);
-	const [character, setCharacter] = useState({ result: { properties: { name: "", gender: "" } } });
-	const [characters, setCharacters] = useState({ results: [] });
-	const [fetchCharactersEnd, setFetchCharactersEnd] = useState(false);
+	const [characters, setCharacters] = useState(null);
 
-	let ArrayCharacters;
 	let baseURL = "https://www.swapi.tech/api/";
 
-	function fetchGET(baseURL, extURL, result, end) {
-		end = false;
-		fetch(baseURL + extURL, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(res => res.json())
-			.then(responseJson => {
-				result(responseJson);
-				end = true;
-			});
+	async function loadPeople() {
+		let peopleJson = await myFetch(baseURL, "people/");
+
+		setCharacters(peopleJson.results);
 	}
 
 	//OBTENER LISTADO COMPLETO AL CARGAR LA PAGINA
 	useEffect(() => {
-		// fetchGET(baseURL, "planets/", setPlanets, setPlanetsLoad);
-		fetchGET(baseURL, "people/", setCharacters, setFetchCharactersEnd);
+		// // fetchGET(baseURL, "planets/", setPlanets, setPlanetsLoad);
+		// myFetch(baseURL, "people/").then(data => {
+		// 	setCharacters(data);
+		// });
+		loadPeople();
 	}, []);
 
-	if (fetchCharactersEnd) {
-		fetchGET(baseURL, "people/1", setCharacter);
-		console.log("hola");
-	}
+	// let planetsHTML = "loading people...";
+	// if (characters) {
+	// 	planetsHTML = characters.map(planet => {
+	// 		return "hola";
+	// 	});
+	// }
+
+	// let planetsHTML = "loading people...";
+	// if (characters) {
+	//     planetsHTML = characters.map(planet => {
+	//         return <Planet key={planet.id} planet={planet} />;
+	//     });
+	// }
 
 	return (
 		<div className="text-center mt-5">
-			{/* <Card2
-				title={character.result.properties.name}
-				gender={character.result.properties.gender}
-				hairColor={character.result.properties.hair_color}
-				eyesColor={character.result.properties.eye_color}
-				url={character.result.properties.url}
-			/> */}
-			{characters.results.length}
-			{character.result.properties.name}
-			{/* <ul>
-				{characters.results.map(character => {
-					return "hola";
-				})}
-			</ul> */}
+			{/* {planetsHTML} */}
+
+			<h1>Characters</h1>
+			<div className="">
+				{characters != null ? (
+					<ul>
+						{characters.map(person => {
+							return <Card2 key={person.uid} uid={person.uid} />;
+						})}
+					</ul>
+				) : (
+					""
+				)}
+			</div>
 		</div>
 	);
 }

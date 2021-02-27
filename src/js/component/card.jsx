@@ -6,30 +6,56 @@ import { Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
 export default function Card2(props) {
+	const [character, setCharacter] = useState(null);
+	let baseURL = "https://www.swapi.tech/api/";
+
+	function fetchGET(baseURL, extURL, result) {
+		fetch(baseURL + extURL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(response => response.json())
+			.then(data => {
+				result(data.result);
+			});
+	}
+
+	//OBTENER LISTADO COMPLETO AL CARGAR LA PAGINA
+	useEffect(() => {
+		fetchGET(baseURL, "people/" + props.uid, setCharacter);
+	}, []);
+
 	return (
-		<Card style={{ width: "18rem" }}>
-			<Card.Img variant="top" src="holder.js/100px180" />
-			<Card.Body>
-				<Card.Title>{props.title}</Card.Title>
-				<Card.Text>
-					<div>
-						{" "}
-						Gender:
-						{props.gender}
-					</div>
-					<div>Hair Color: {props.hairColor}</div>
-					<div>Eye-Color: {props.eyesColor}</div>
-				</Card.Text>
-				<Card.Link href={props.url}>Learn More</Card.Link>
-			</Card.Body>
-		</Card>
+		<div ClassName="container">
+			<div>
+				{character != null ? (
+					<Card style={{ width: "18rem" }}>
+						<Card.Img variant="top" src="holder.js/100px180" />
+						<Card.Body>
+							<Card.Title />
+							<h3>{character.properties.name}</h3>
+							<Card.Text>
+								<div>
+									{" "}
+									Gender:
+									{character.properties.gender}
+								</div>
+								<div>Hair Color: {character.properties.hair_color} </div>
+								<div>Eye-Color: {character.properties.eye_color}</div>
+							</Card.Text>
+							<Card.Link href={character.properties.url}>Learn More</Card.Link>
+						</Card.Body>
+					</Card>
+				) : (
+					""
+				)}
+			</div>
+		</div>
 	);
 }
 
 Card2.propTypes = {
-	title: PropTypes.string,
-	gender: PropTypes.string,
-	hairColor: PropTypes.string,
-	eyesColor: PropTypes.string,
-	url: PropTypes.string
+	uid: PropTypes.string
 };
