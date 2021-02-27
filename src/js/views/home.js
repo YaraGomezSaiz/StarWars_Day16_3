@@ -1,8 +1,15 @@
+// import React
 import React, { useState, useEffect } from "react";
-import "../../styles/home.scss";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import { myFetch } from "../fetchFunction.js";
 
+//include bootstrap npm library into the bundle
+import "bootstrap/dist/css/bootstrap.css";
+
+//include your index.scss file into the bundle
+import "../../styles/index.scss";
+
+//Import public functions
+import { myFetch } from "../fetchFunction.js";
+//Import Components
 import Card2 from "../component/card.jsx";
 
 export default function Home() {
@@ -24,20 +31,6 @@ export default function Home() {
 		// });
 		loadPeople();
 	}, []);
-
-	// let planetsHTML = "loading people...";
-	// if (characters) {
-	// 	planetsHTML = characters.map(planet => {
-	// 		return "hola";
-	// 	});
-	// }
-
-	// let planetsHTML = "loading people...";
-	// if (characters) {
-	//     planetsHTML = characters.map(planet => {
-	//         return <Planet key={planet.id} planet={planet} />;
-	//     });
-	// }
 
 	return (
 		<div className="text-center mt-5">
