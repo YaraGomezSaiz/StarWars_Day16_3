@@ -15,7 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{
 					baseURL: "https://www.swapi.tech/api/"
 				}
-			]
+			],
+			favorites: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction

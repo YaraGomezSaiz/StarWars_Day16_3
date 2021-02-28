@@ -16,15 +16,21 @@ import Card2 from "../component/card.jsx";
 export default function Home() {
 	const { store } = useContext(Context);
 	const [characters, setCharacters] = useState(null);
+	const [planets, setPlanets] = useState(null);
 
 	//OBTENER LISTADO COMPLETO AL CARGAR LA PAGINA
 	useEffect(() => {
 		loadPeople();
+		loadPlanets();
 	}, []);
 
 	async function loadPeople() {
-		let peopleJson = await myFetch(store.demo[2].baseURL, "people/");
-		setCharacters(peopleJson.results);
+		let resultJson = await myFetch(store.demo[2].baseURL, "people/");
+		setCharacters(resultJson.results);
+	}
+	async function loadPlanets() {
+		let resultJson = await myFetch(store.demo[2].baseURL, "planets/");
+		setPlanets(resultJson.results);
 	}
 
 	//
@@ -42,6 +48,17 @@ export default function Home() {
 				) : (
 					""
 				)}
+				<p>
+					{planets != null ? (
+						<ul>
+							{planets.map(planet => {
+								return <Card2 key={planet.uid} uid={planet.uid} />;
+							})}
+						</ul>
+					) : (
+						""
+					)}
+				</p>
 			</div>
 		</div>
 	);
