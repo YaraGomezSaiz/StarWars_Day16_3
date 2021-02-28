@@ -39,11 +39,15 @@ border-color: #FED65F;
 
 .btnFavorites:focus {     
     color:black;  
-    background-color: white;
+    border-color: #FED65F;
+    background-color: #FED65F;
+     box-shadow: inset 0 0 0 1px #FED65F;
 
 }
 .btnFavorites:active {
-  background-color: white;
-  color: #FED65F;
+ background-color: white;
+color: #FED65F;
+border-color: #FED65F;
 }
+
 
