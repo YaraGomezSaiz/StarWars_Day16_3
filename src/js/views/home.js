@@ -12,6 +12,7 @@ import "../../styles/home.scss";
 import { myFetch } from "../fetchFunction.js";
 //Import Components
 import Card2 from "../component/card.jsx";
+import Planet from "../component/planet.jsx";
 
 export default function Home() {
 	const { store } = useContext(Context);
@@ -52,7 +53,7 @@ export default function Home() {
 					{planets != null ? (
 						<ul>
 							{planets.map(planet => {
-								return <Card2 key={planet.uid} uid={planet.uid} />;
+								return <Planet key={planet.uid} uid={planet.uid} />;
 							})}
 						</ul>
 					) : (

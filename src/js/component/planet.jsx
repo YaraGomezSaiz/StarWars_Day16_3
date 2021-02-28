@@ -18,7 +18,7 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 //Import public functions
 import { myFetch } from "../fetchFunction.js";
 
-export default function Card2(props) {
+export default function Planet(props) {
 	const { store } = useContext(Context);
 	const [character, setCharacter] = useState(null);
 	const [favorite, setFavorite] = useState(false);
@@ -26,7 +26,7 @@ export default function Card2(props) {
 
 	//Obtener de la API las propiedades de cada personaje
 	useEffect(() => {
-		myFetch(store.demo[2].baseURL, "people/" + props.uid).then(data => {
+		myFetch(store.demo[2].baseURL, "planet/" + props.uid).then(data => {
 			setCharacter(data.result);
 		});
 	}, []);
@@ -50,15 +50,14 @@ export default function Card2(props) {
 					<Card.Img variant="top" src="https://picsum.photos/400/300/" />
 					<Card.Body>
 						<Card.Title />
-						<h3>{character.properties.name}</h3>
+						<h3> {character.properties.name}</h3>
 						<Card.Text>
 							<div>
 								{" "}
-								Gender:
-								{character.properties.gender}
+								Population:
+								{character.properties.population}
 							</div>
-							<div>Hair Color: {character.properties.hair_color} </div>
-							<div>Eye-Color: {character.properties.eye_color}</div>
+							<div>Terrain: {character.properties.terrain} </div>
 						</Card.Text>
 
 						<div className="d-flex justify-content-between">
@@ -87,6 +86,6 @@ export default function Card2(props) {
 	);
 }
 
-Card2.propTypes = {
+Planet.propTypes = {
 	uid: PropTypes.string
 };
