@@ -7,8 +7,10 @@ export async function myFetch(baseURL, path, method = "GET") {
 
 //placeholders.com
 
+//OTRA FORMA DE GENERAR FUNCION FETCH
+
 // export async function myFetch(baseURL, path) {
-//     console.log("hola");
+
 //     let response= await fetch(baseURL + path, {
 // 		method: "GET",
 // 		headers: { "Content-Type": "application/json" }

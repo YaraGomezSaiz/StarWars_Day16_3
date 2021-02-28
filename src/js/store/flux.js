@@ -11,6 +11,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					title: "SECOND",
 					background: "white",
 					initial: "white"
+				},
+				{
+					baseURL: "https://www.swapi.tech/api/"
 				}
 			]
 		},

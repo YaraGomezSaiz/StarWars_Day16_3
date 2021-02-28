@@ -1,11 +1,12 @@
 // import React
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext.js";
 
 //include bootstrap npm library into the bundle
 import "bootstrap/dist/css/bootstrap.css";
 
 //include your index.scss file into the bundle
-import "../../styles/index.scss";
+import "../../styles/home.scss";
 
 //Import public functions
 import { myFetch } from "../fetchFunction.js";
@@ -13,30 +14,24 @@ import { myFetch } from "../fetchFunction.js";
 import Card2 from "../component/card.jsx";
 
 export default function Home() {
+	const { store } = useContext(Context);
 	const [characters, setCharacters] = useState(null);
-
-	let baseURL = "https://www.swapi.tech/api/";
-
-	async function loadPeople() {
-		let peopleJson = await myFetch(baseURL, "people/");
-
-		setCharacters(peopleJson.results);
-	}
 
 	//OBTENER LISTADO COMPLETO AL CARGAR LA PAGINA
 	useEffect(() => {
-		// // fetchGET(baseURL, "planets/", setPlanets, setPlanetsLoad);
-		// myFetch(baseURL, "people/").then(data => {
-		// 	setCharacters(data);
-		// });
 		loadPeople();
 	}, []);
 
-	return (
-		<div className="text-center mt-5">
-			{/* {planetsHTML} */}
+	async function loadPeople() {
+		let peopleJson = await myFetch(store.demo[2].baseURL, "people/");
+		setCharacters(peopleJson.results);
+	}
 
-			<h1>Characters</h1>
+	//
+
+	return (
+		<div className="">
+			<h1 className="title">Characters</h1>
 			<div className="">
 				{characters != null ? (
 					<ul>
