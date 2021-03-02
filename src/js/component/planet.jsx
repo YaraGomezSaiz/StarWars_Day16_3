@@ -26,7 +26,7 @@ export default function Planet(props) {
 
 	//Obtener de la API las propiedades de cada personaje
 	useEffect(() => {
-		myFetch(store.demo[2].baseURL, "planet/" + props.uid).then(data => {
+		myFetch(store.demo[2].baseURL, "planets/" + props.uid).then(data => {
 			setCharacter(data.result);
 		});
 	}, []);

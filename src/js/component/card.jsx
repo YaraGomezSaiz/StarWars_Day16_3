@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 //Import Store,actions
 import { Context } from "../store/appContext.js";
 
+//Import Link to other pages
+import { Link, useParams } from "react-router-dom";
+
 //Import Boostrap components
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Card } from "react-bootstrap";
@@ -19,28 +22,34 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { myFetch } from "../fetchFunction.js";
 
 export default function Card2(props) {
-	const { store } = useContext(Context);
+	const { store, actions } = useContext(Context);
 	const [character, setCharacter] = useState(null);
 	const [favorite, setFavorite] = useState(false);
 	const [showSolidIcon, setShowSolidIcon] = useState(false);
+	let favorite_aux = false;
 
 	//Obtener de la API las propiedades de cada personaje
 	useEffect(() => {
 		myFetch(store.demo[2].baseURL, "people/" + props.uid).then(data => {
 			setCharacter(data.result);
+			let charactersArray = Array.from(store.characters);
+			charactersArray.push(data.result);
+			actions.setCharacters(charactersArray);
 		});
 	}, []);
 
-	function addToFavorites() {
-		if (!favorite) {
-			store.favorites.push(character.properties.name);
+	function addToFavorites(name, Item) {
+		let favoritesArray = Array.from(store.favorites);
+		let index = favoritesArray.findIndex(index => index === name);
+
+		if (index == -1) {
+			favoritesArray.push(Item);
+			favorite_aux = true;
 		} else {
-			let index = store.favorites.findIndex(index => index === character.properties.name);
-			store.favorites.splice(index, 1);
+			favoritesArray.splice(index, 1);
+			favorite_aux = false;
 		}
-		setFavorite(!favorite);
-		console.log(store.favorites);
-		console.log(store.favorites.length);
+		actions.setFavorites(favoritesArray);
 	}
 
 	return (
@@ -62,13 +71,16 @@ export default function Card2(props) {
 						</Card.Text>
 
 						<div className="d-flex justify-content-between">
-							<Button className="btnLearnMore" href={character.properties.url} target="_blank">
-								Learn More!
-							</Button>
+							<Link to={"single/" + props.uid}>
+								<Button className="btnLearnMore" href={character.properties.url}>
+									Learn More!
+								</Button>
+							</Link>
+
 							<Button
 								className="btnFavorites"
 								href=""
-								onClick={addToFavorites}
+								onClick={addToFavorites(character.properties.name, character)}
 								onMouseOver={() => setShowSolidIcon(true)}
 								onMouseLeave={() => setShowSolidIcon(false)}>
 								{favorite || showSolidIcon ? (

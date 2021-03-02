@@ -49,17 +49,20 @@ export default function Home() {
 				) : (
 					""
 				)}
-				<p>
-					{planets != null ? (
-						<ul>
-							{planets.map(planet => {
-								return <Planet key={planet.uid} uid={planet.uid} />;
-							})}
-						</ul>
-					) : (
-						""
-					)}
-				</p>
+				<div className="Cards">
+					<h1 className="title">Planets</h1>
+					<div className="planets">
+						{planets != null ? (
+							<ul>
+								{planets.map(planet => {
+									return <Planet key={planet.uid} uid={planet.uid} />;
+								})}
+							</ul>
+						) : (
+							""
+						)}
+					</div>
+				</div>
 			</div>
 		</div>
 	);

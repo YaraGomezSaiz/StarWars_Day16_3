@@ -14,11 +14,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 				},
 				{
 					baseURL: "https://www.swapi.tech/api/"
-				}
+				},
+				{ name: "yara" }
 			],
+			characters: [],
+			planets: [],
 			favorites: []
+			// favorite: false
 		},
 		actions: {
+			setCharacters(characters) {
+				setStore({ characters: characters });
+			},
+
+			setPlanets(planets) {
+				setStore({ planets: planets });
+			},
+
+			setFavorites(favorites) {
+				setStore({ favorites: favorites });
+			},
+
+			// lookForFavorites(name) {
+			// 	let index = favorites.findIndex(index => index === name);
+			// 	let favorite;
+			// 	if (index === -1) {
+			// 		setFavorite(true);
+			// 	} else {
+			// 		setFavorite(false);
+			// 	}
+			// },
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
