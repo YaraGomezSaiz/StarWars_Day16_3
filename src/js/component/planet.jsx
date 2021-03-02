@@ -39,8 +39,6 @@ export default function Planet(props) {
 			store.favorites.splice(index, 1);
 		}
 		setFavorite(!favorite);
-		console.log(store.favorites);
-		console.log(store.favorites.length);
 	}
 
 	return (

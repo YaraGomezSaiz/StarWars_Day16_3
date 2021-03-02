@@ -44,21 +44,23 @@ export default function Navbar() {
 				{/* <Link to="/demo"> */}
 				<Dropdown>
 					<Dropdown.Toggle variant="primary" id="dropdown-basic">
-						Favorites {store.favorites.length}
+						Favorites <span className="bg-secondary"> {store.favorites.length}</span>
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
-						{store.favorites.map(favorite => {
-							return (
-								<Dropdown.Item key={favorite.properties.name}>
-									<Link to={"single/" + favorite.uid}>
-										<Button variant="link">{favorite.properties.name}</Button>
-									</Link>
-									<Button onClick={() => deleteFavoriteItem(favorite.properties.name)}>
-										<FontAwesomeIcon icon={faTrash} />
-									</Button>
-								</Dropdown.Item>
-							);
-						})}
+						{store.favorites.length > 0
+							? store.favorites.map(favorite => {
+									return (
+										<Dropdown.Item key={favorite.properties.name}>
+											<Link to={"single/" + favorite.uid}>
+												<Button variant="link">{favorite.properties.name}</Button>
+											</Link>
+											<Button onClick={() => deleteFavoriteItem(favorite.properties.name)}>
+												<FontAwesomeIcon icon={faTrash} />
+											</Button>
+										</Dropdown.Item>
+									);
+							  })
+							: "Empty"}
 					</Dropdown.Menu>
 				</Dropdown>
 				{/* </Link> */}

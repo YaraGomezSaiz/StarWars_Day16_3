@@ -24,9 +24,8 @@ import { myFetch } from "../fetchFunction.js";
 export default function Card2(props) {
 	const { store, actions } = useContext(Context);
 	const [character, setCharacter] = useState(null);
-	const [favorite, setFavorite] = useState(false);
 	const [showSolidIcon, setShowSolidIcon] = useState(false);
-	let favorite_aux = false;
+	let favorite = false;
 
 	//Obtener de la API las propiedades de cada personaje
 	useEffect(() => {
@@ -38,16 +37,26 @@ export default function Card2(props) {
 		});
 	}, []);
 
-	function addToFavorites(name, Item) {
-		let favoritesArray = Array.from(store.favorites);
-		let index = favoritesArray.findIndex(index => index === name);
+	if (character != null) {
+		favorite = isFavorite(character.properties.name, store.favorites);
+	}
 
-		if (index == -1) {
-			favoritesArray.push(Item);
-			favorite_aux = true;
+	function isFavorite(name, array) {
+		let index = array.findIndex(elem => elem.properties.name === name);
+		if (index === -1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function addToFavorites(name, array, favorite) {
+		let index = array.findIndex(elem => elem.properties.name === name);
+		let favoritesArray = Array.from(array);
+		if (!favorite) {
+			favoritesArray.push(character);
 		} else {
 			favoritesArray.splice(index, 1);
-			favorite_aux = false;
 		}
 		actions.setFavorites(favoritesArray);
 	}
@@ -80,7 +89,7 @@ export default function Card2(props) {
 							<Button
 								className="btnFavorites"
 								href=""
-								onClick={addToFavorites(character.properties.name, character)}
+								onClick={() => addToFavorites(character.properties.name, store.favorites, favorite)}
 								onMouseOver={() => setShowSolidIcon(true)}
 								onMouseLeave={() => setShowSolidIcon(false)}>
 								{favorite || showSolidIcon ? (
