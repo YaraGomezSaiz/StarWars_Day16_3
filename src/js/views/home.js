@@ -11,7 +11,7 @@ import "../../styles/home.scss";
 //Import public functions
 import { myFetch } from "../fetchFunction.js";
 //Import Components
-import Card2 from "../component/card.jsx";
+import Card2 from "../component/cardCharacter.jsx";
 import Planet from "../component/planet.jsx";
 
 export default function Home() {
@@ -37,31 +37,34 @@ export default function Home() {
 	//
 
 	return (
-		<div className="">
+		<div className="container-fluid">
 			<h1 className="title">Characters</h1>
-			<div className="">
-				{characters != null ? (
-					<ul>
-						{characters.map(person => {
-							return <Card2 key={person.uid} uid={person.uid} />;
-						})}
-					</ul>
-				) : (
-					""
-				)}
-				<div className="Cards">
-					<h1 className="title">Planets</h1>
-					<div className="planets">
-						{planets != null ? (
-							<ul>
-								{planets.map(planet => {
-									return <Planet key={planet.uid} uid={planet.uid} />;
-								})}
-							</ul>
-						) : (
-							""
-						)}
-					</div>
+
+			<div className="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
+				<div className="col-5">
+					{characters != null ? (
+						<ul>
+							{characters.map(person => {
+								return <Card2 key={person.uid} uid={person.uid} />;
+							})}
+						</ul>
+					) : (
+						""
+					)}
+				</div>
+			</div>
+
+			<div className="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
+				<div className="col-5">
+					{planets != null ? (
+						<ul>
+							{planets.map(planet => {
+								return <Planet key={planet.uid} uid={planet.uid} />;
+							})}
+						</ul>
+					) : (
+						""
+					)}
 				</div>
 			</div>
 		</div>

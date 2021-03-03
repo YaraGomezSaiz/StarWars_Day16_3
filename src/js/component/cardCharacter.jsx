@@ -20,6 +20,7 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 //Import public functions
 import { myFetch } from "../fetchFunction.js";
+import isFavorite from "../isFavorite.js";
 
 export default function Card2(props) {
 	const { store, actions } = useContext(Context);
@@ -40,15 +41,6 @@ export default function Card2(props) {
 
 	if (character != null) {
 		favorite = isFavorite(character.properties.name, store.favorites);
-	}
-
-	function isFavorite(name, array) {
-		let index = array.findIndex(elem => elem.properties.name === name);
-		if (index === -1) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	function addToFavorites(name, array, favorite) {

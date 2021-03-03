@@ -59,12 +59,7 @@ border-color: #FED65F;
 
 }
 
-.navbar{
-   position: absolute;
-    top: 0;
-    right: 0;
-    width: 100% !important;
-    left: 0;
-    z-index: 20;
-}
 
+.scrolling-wrapper{
+	overflow-x: auto;
+}
