@@ -24,8 +24,9 @@ import { myFetch } from "../fetchFunction.js";
 export default function Card2(props) {
 	const { store, actions } = useContext(Context);
 	const [character, setCharacter] = useState(null);
-	const [showSolidIcon, setShowSolidIcon] = useState(false);
+	// const [showSolidIcon, setShowSolidIcon] = useState(false);
 	let favorite = false;
+	let msdate = 0;
 
 	//Obtener de la API las propiedades de cada personaje
 	useEffect(() => {
@@ -61,11 +62,17 @@ export default function Card2(props) {
 		actions.setFavorites(favoritesArray);
 	}
 
+	//nos entrega la fecha en ms que luego pasamos a la web generadora de imagenes como parametro,
+	//esto nos permite que nos cargue una imagen diferente en cada Card pq detecta que son peticiones diferentes, sino la misma en todas las cards
+
+	let date = new Date();
+	msdate = date.getTime();
+
 	return (
 		<li>
 			{character != null ? (
 				<Card style={{ width: "18rem" }}>
-					<Card.Img variant="top" src="https://picsum.photos/400/300/" />
+					<Card.Img variant="top" src={"https://picsum.photos/400/300/?t" + msdate} />
 					<Card.Body>
 						<Card.Title />
 						<h3>{character.properties.name}</h3>
@@ -87,16 +94,13 @@ export default function Card2(props) {
 							</Link>
 
 							<Button
-								className="btnFavorites"
-								href=""
+								variant="outline-warning"
 								onClick={() => addToFavorites(character.properties.name, store.favorites, favorite)}
-								onMouseOver={() => setShowSolidIcon(true)}
-								onMouseLeave={() => setShowSolidIcon(false)}>
-								{favorite || showSolidIcon ? (
-									<FontAwesomeIcon icon={faHeart} />
-								) : (
-									<FontAwesomeIcon icon={farHeart} />
-								)}
+
+								// onMouseOver={() => setShowSolidIcon(true)}
+								// onMouseLeave={() => setShowSolidIcon(false)}
+							>
+								{favorite ? <FontAwesomeIcon icon={faHeart} /> : <FontAwesomeIcon icon={farHeart} />}
 							</Button>
 						</div>
 					</Card.Body>

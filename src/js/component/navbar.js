@@ -13,14 +13,12 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Context } from "../store/appContext.js";
 
 //Import Boostrap components
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import Dropdown from "react-bootstrap/Dropdown";
-import Button from "react-bootstrap/Button";
+import { Navbar, NavDropdown, Dropdown, Button } from "react-bootstrap";
 
 //Import public functions
 import deleteItemFromArray from "../deleteFunction.js";
 
-export default function Navbar() {
+export default function NavbarFixed() {
 	const { store, actions } = useContext(Context);
 
 	function deleteFavoriteItem(lookForIndex) {
@@ -31,7 +29,7 @@ export default function Navbar() {
 	}
 
 	return (
-		<nav className="navbar navbar-light bg-light mb-3">
+		<nav className="navbar navbar-light bg-light mb-3" sticky="top">
 			<Link to="/">
 				<img
 					className="logo"
@@ -50,11 +48,17 @@ export default function Navbar() {
 						{store.favorites.length > 0
 							? store.favorites.map(favorite => {
 									return (
-										<Dropdown.Item key={favorite.properties.name}>
+										<Dropdown.Item
+											className="d-flex justify-content-between"
+											key={favorite.properties.name}>
 											<Link to={"single/" + favorite.uid}>
 												<Button variant="link">{favorite.properties.name}</Button>
 											</Link>
-											<Button onClick={() => deleteFavoriteItem(favorite.properties.name)}>
+											<Button
+												className="deleteBtn"
+												variant="link"
+												text="black"
+												onClick={() => deleteFavoriteItem(favorite.properties.name)}>
 												<FontAwesomeIcon icon={faTrash} />
 											</Button>
 										</Dropdown.Item>
