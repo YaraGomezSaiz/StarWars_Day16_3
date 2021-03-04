@@ -51,7 +51,7 @@ export default function NavbarFixed() {
 										<Dropdown.Item
 											className="d-flex justify-content-between"
 											key={favorite.properties.name}>
-											<Link to={"single/" + favorite.uid}>
+											<Link to={"descriptionCharacter/" + favorite.uid}>
 												<Button variant="link">{favorite.properties.name}</Button>
 											</Link>
 											<Button

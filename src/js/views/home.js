@@ -12,7 +12,7 @@ import "../../styles/home.scss";
 import { myFetch } from "../fetchFunction.js";
 //Import Components
 import Card2 from "../component/cardCharacter.jsx";
-import Planet from "../component/planet.jsx";
+import Planet from "../component/cardPlanet.jsx";
 
 export default function Home() {
 	const { store } = useContext(Context);

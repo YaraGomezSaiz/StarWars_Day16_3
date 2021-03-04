@@ -24,30 +24,29 @@ import isFavorite from "../isFavorite.js";
 
 export default function Card2(props) {
 	const { store, actions } = useContext(Context);
-	const [character, setCharacter] = useState(null);
-	// const [showSolidIcon, setShowSolidIcon] = useState(false);
+	const [planet, setPlanet] = useState(null);
 	let favorite = false;
 	let msdate = 0;
 
 	//Obtener de la API las propiedades de cada personaje
 	useEffect(() => {
-		myFetch(store.demo[2].baseURL, "people/" + props.uid).then(data => {
-			setCharacter(data.result);
-			let charactersArray = Array.from(store.characters);
-			charactersArray.push(data.result);
-			actions.setCharacters(charactersArray);
+		myFetch(store.demo[2].baseURL, "planets/" + props.uid).then(data => {
+			setPlanet(data.result);
+			let planetsArray = Array.from(store.planets);
+			planetsArray.push(data.result);
+			actions.setPlanets(planetsArray);
 		});
 	}, []);
 
-	if (character != null) {
-		favorite = isFavorite(character.properties.name, store.favorites);
+	if (planet != null) {
+		favorite = isFavorite(planet.properties.name, store.favorites);
 	}
 
 	function addToFavorites(name, array, favorite) {
 		let index = array.findIndex(elem => elem.properties.name === name);
 		let favoritesArray = Array.from(array);
 		if (!favorite) {
-			favoritesArray.push(character);
+			favoritesArray.push(planet);
 		} else {
 			favoritesArray.splice(index, 1);
 		}
@@ -62,36 +61,30 @@ export default function Card2(props) {
 
 	return (
 		<li>
-			{character != null ? (
+			{planet != null ? (
 				<Card style={{ width: "18rem" }}>
 					<Card.Img variant="top" src={"https://picsum.photos/400/300/?t" + msdate} />
 					<Card.Body>
 						<Card.Title />
-						<h3>{character.properties.name}</h3>
+						<h3> {planet.properties.name}</h3>
 						<Card.Text>
 							<div>
 								{" "}
-								Gender:
-								{character.properties.gender}
+								Population:
+								{planet.properties.population}
 							</div>
-							<div>Hair Color: {character.properties.hair_color} </div>
-							<div>Eye-Color: {character.properties.eye_color}</div>
+							<div>Terrain: {planet.properties.terrain} </div>
 						</Card.Text>
-
 						<div className="d-flex justify-content-between">
-							<Link to={"descriptionCharacter/" + props.uid}>
-								<Button className="btnLearnMore" href={character.properties.url}>
+							<Link to={"descriptionPlanet/" + props.uid}>
+								<Button className="btnLearnMore" href={planet.properties.url}>
 									Learn More!
 								</Button>
 							</Link>
 
 							<Button
 								variant="outline-warning"
-								onClick={() => addToFavorites(character.properties.name, store.favorites, favorite)}
-
-								// onMouseOver={() => setShowSolidIcon(true)}
-								// onMouseLeave={() => setShowSolidIcon(false)}
-							>
+								onClick={() => addToFavorites(planet.properties.name, store.favorites, favorite)}>
 								{favorite ? <FontAwesomeIcon icon={faHeart} /> : <FontAwesomeIcon icon={farHeart} />}
 							</Button>
 						</div>
